@@ -1,0 +1,32 @@
+# Core: rubric rewards, ALM judges, MusicGen DPO.
+# Versions are not pinned here; the README lists the versions we used.
+torch
+torchaudio
+transformers          # Qwen3-Omni / Music Flamingo classes need a recent release (we used 5.5.4)
+accelerate
+peft
+numpy
+PyYAML
+librosa
+soundfile
+qwen-omni-utils       # Qwen3-Omni audio preprocessing
+audiocraft            # MusicGen (facebook/musicgen-small)
+wandb                 # optional logging
+
+# ACE-Step DPO and DiffusionNFT.
+# ACE-Step pins transformers==4.50.0; to share one environment with the judges,
+# install it without dependencies (see README):
+#   pip install --no-deps "ace-step @ git+https://github.com/ace-step/ACE-Step.git@1bee4c9f5b43e30995f8d4d33b3919197ce1bd68"
+diffusers
+ml-collections
+absl-py
+loguru
+huggingface-hub
+py3langid
+pypinyin
+num2words
+spacy
+hangul-romanize
+cutlet
+fugashi[unidic-lite]
+

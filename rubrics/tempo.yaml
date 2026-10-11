@@ -1,0 +1,111 @@
+# Tempo rubric. The prompt requests a tempo in BPM.
+name: tempo
+score_min: 0.0
+score_max: 10.0
+clip_duration_seconds: 15
+ending_window_seconds: 5
+task_instructions:
+  - First identify the dominant perceived beat or tactus across the complete clip; do not equate note, hi-hat, or onset density with BPM.
+  - Treat a numeric BPM request as a narrow target and a named or qualitative tempo request as a range, using the anchors in each dimension.
+  - Keep target accuracy separate from stability: a perfectly steady clip at the wrong BPM may score high for stability and low for adherence.
+  - Give partial credit for a genuinely plausible half-time or double-time beat interpretation, but do not automatically treat every factor-of-two mismatch as correct.
+  - Judge changing tempo, rubato, or free time as stable and appropriate only when the music description explicitly requests it.
+dimensions:
+  - key: requested_tempo_adherence
+    display_name: Requested tempo adherence
+    definition: >-
+      How accurately the dominant perceived beat rate of the complete clip
+      follows the explicit tempo requested in the music description, whether
+      expressed as numeric BPM, a classical tempo marking, or a qualitative
+      slow or fast instruction.
+    evidence:
+      - Dominant perceived beat or tactus rate across the complete clip
+      - Agreement with an explicit numeric BPM and its narrow tolerance
+      - Agreement with the requested classical tempo-marking range
+      - Agreement with explicit slow or fast wording
+      - Sustained tempo drift that moves the clip away from the target
+      - Whether a brief intro or breakdown differs from the dominant clip tempo
+    anchors:
+      "0": >-
+        No usable pulse is audible when one is requested, or the dominant tempo
+        is grossly incompatible with the target throughout the clip.
+      "2": >-
+        A clear pulse exists but is far from the requested tempo, with only a
+        weak half-time or double-time relationship to the target.
+      "5": >-
+        The perceived tempo is in the broad requested neighborhood but has a
+        noticeable BPM mismatch, ambiguous beat level, or substantial drift.
+      "8": >-
+        The dominant tempo closely matches the requested BPM or category, with
+        only a small deviation or brief local variation.
+      "10": >-
+        The complete clip unambiguously and consistently realizes the exact
+        requested tempo or lies securely inside the requested tempo range.
+    calibration: >-
+      Base this score on the dominant perceived tactus, not onset density; a
+      plausible half-time or double-time reading can receive partial credit but
+      must not be treated automatically as an exact match.
+    confounders:
+      - Genre, instrumentation, melody, harmony, production polish, and general enjoyment
+      - Loudness, density, number of onsets, and amount of percussion
+      - Rhythmic subdivision density, which is not itself the beat rate
+      - A musically plausible half-time or double-time interpretation, which may justify partial rather than zero credit
+      - Expressive microtiming that does not change the dominant tempo
+    weight: 0.60
+
+  - key: beat_pulse_stability
+    display_name: Beat and pulse stability
+    definition: >-
+      How stable and trackable the underlying beat is over time when the prompt
+      calls for a steady metrical tempo, independent of whether that beat is at
+      the requested BPM.
+    evidence:
+      - Consistency of successive beat intervals
+      - Unintended acceleration, deceleration, stutter, or timing collapse
+      - Continuity of the pulse through transitions and changes in density
+      - Synchronization of rhythmic parts around one underlying beat
+      - Clearly intentional tempo changes or rubato requested by the description
+    anchors:
+      "0": No trackable beat or persistently broken timing despite a steady-tempo request.
+      "2": The beat is frequently lost, contradictory, or disrupted by severe unintended drift.
+      "5": A mostly trackable pulse with several obvious timing instabilities or ambiguous sections.
+      "8": A stable, coherent pulse with only minor local deviations or intentional expressive timing.
+      "10": Exceptionally stable and unambiguous pulse continuity throughout the complete clip.
+    calibration: >-
+      A steady clip at the wrong BPM can score highly here because requested
+      tempo accuracy is scored separately.
+    confounders:
+      - Whether the stable beat is at the requested BPM; score that only under requested_tempo_adherence
+      - Syncopation, swing, polyrhythm, or expressive microtiming that preserves a coherent beat
+      - Beatless, free-time, rubato, or changing-tempo behavior when explicitly requested
+      - Loudness, percussion prominence, onset density, and production quality
+    weight: 0.25
+
+  - key: tempo_feel_musical_fit
+    display_name: Tempo feel and musical fit
+    definition: >-
+      How convincingly the audible rhythmic feel communicates the requested
+      tempo character and supports the described musical style without scoring
+      unrelated content attributes.
+    evidence:
+      - Whether slow music feels spacious and unhurried rather than merely sparse
+      - Whether fast music feels driven and forward-moving rather than merely busy
+      - Compatibility of rhythmic phrasing and groove with the requested tempo character
+      - Natural musical handling of the target tempo by the audible parts
+      - Contradictions between the stated tempo character and perceived motion
+    anchors:
+      "0": The musical motion strongly contradicts the requested tempo character.
+      "2": The requested tempo feel is mostly absent or conveyed only by superficial onset density.
+      "5": The general tempo character is recognizable but weak, generic, or inconsistently supported.
+      "8": The rhythmic feel convincingly supports the requested tempo character and musical context.
+      "10": The tempo character is exceptionally clear, natural, and integral to the musical result.
+    calibration: >-
+      Score only how the rhythmic feel communicates the requested tempo
+      character, not the clip's general quality or exact numeric BPM error.
+    confounders:
+      - Exact BPM error and beat-interval stability, which have their own dimensions
+      - Genre, instrumentation, melody, harmony, production polish, and overall enjoyment except as direct tempo-feel evidence
+      - Loudness, density, complexity, and percussion count
+      - Sparse texture by itself as evidence of slow tempo
+      - Dense subdivisions by themselves as evidence of fast tempo
+    weight: 0.15

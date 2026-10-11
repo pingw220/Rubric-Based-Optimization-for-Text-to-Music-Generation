@@ -1,0 +1,250 @@
+# Seven-dimension music-quality rubric (general text-to-music, MusicCaps).
+name: general
+score_min: 0.0
+score_max: 10.0
+dimensions:
+  - key: prompt_alignment
+    display_name: Prompt alignment
+    definition: >-
+      Match to the complete text description. Focus on all salient requested
+      attributes, not only genre keywords: style, era, instrumentation,
+      instrumental roles, mood, atmosphere, energy, tempo, texture, and explicit
+      constraints.
+    evidence:
+      - Requested genre, subgenre, style, and era
+      - Requested instruments and the roles they play
+      - Requested mood, atmosphere, and energy
+      - Requested tempo, feel, and texture
+      - Explicit constraints stated in the description
+      - Contradictions between the description and what is audible
+    anchors:
+      "0": Unrelated to or strongly contradicts most salient prompt attributes.
+      "2": >-
+        Only generic similarities; major genre, instrumentation, mood, tempo, or
+        texture requirements are wrong.
+      "5": >-
+        Partial match with several correct attributes but important omissions or
+        contradictions.
+      "8": Most salient attributes are clearly audible with no major contradiction.
+      "10": Precise and convincing realization of all salient audible attributes.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: genre and style,
+      instruments and roles, mood and energy, tempo and feel, and texture or
+      explicit constraints. Preserve the sum rather than snapping to an anchor;
+      absent evidence earns 0, partial or generic evidence 1, and a clear match
+      2.
+    confounders:
+      - Technical polish, except when the prompt itself requests a production characteristic
+      - General enjoyment
+      - Loudness
+      - Density
+      - Instrument count
+      - Complexity
+    weight: 0.25
+
+  - key: style_instrumentation
+    display_name: Style and instrumentation
+    definition: >-
+      Genre-specific style realization, instrumentation, instrumental roles,
+      timbre, performance character, and arrangement appropriateness.
+    evidence:
+      - Which instruments are actually audible and how idiomatic they sound
+      - Instrumental roles such as lead, accompaniment, bass, and percussion
+      - Timbre and tone appropriate to the requested style
+      - Performance character, articulation, and phrasing
+      - Arrangement choices appropriate to the style
+    anchors:
+      "0": No recognizable style and no appropriate instrumentation.
+      "2": Wrong instruments or a style realization that contradicts the request.
+      "5": Some correct instruments or stylistic markers, but generic or partly wrong.
+      "8": Convincing style realization with appropriate, idiomatic instrumentation and roles.
+      "10": Expert, idiomatic style and arrangement with fully appropriate instrumental roles.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: style idiom, lead
+      role, accompaniment role, bass or low-frequency role, and percussion or
+      performance character. Preserve the sum rather than snapping to an
+      anchor; instrument count alone earns no point.
+    confounders:
+      - A larger number of instruments, which must not by itself raise the score
+      - Loudness
+      - Density
+      - Complexity
+      - General enjoyment
+      - Technical polish
+    weight: 0.15
+
+  - key: melody
+    display_name: Melody and motif
+    definition: >-
+      Coherent and appropriate melodic or motif-like material, meaningful
+      repetition or variation, and recall.
+    evidence:
+      - Identifiable motifs, hooks, gestures, or riffs
+      - Coherent pitch movement or pattern movement
+      - Meaningful repetition and variation
+      - Recall after one listen
+      - Textural or percussive motifs when the genre has no tonal melody
+    anchors:
+      "0": No coherent melodic or motivic idea at all.
+      "2": Fragmentary, random, or incoherent material.
+      "5": Recognizable but generic or weakly developed material.
+      "8": Memorable, coherent material with meaningful repetition or variation.
+      "10": Exceptional, distinctive material with strong development and recall.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: identifiable idea,
+      internal coherence, repetition, variation or development, and recall or
+      distinctiveness. Preserve the sum rather than snapping to an anchor;
+      generic evidence earns at most 1 on a check.
+    confounders:
+      - Ambient, textural, percussion-led, or minimally melodic genres, which must not be automatically penalized
+      - Loudness
+      - Density
+      - Instrument count
+      - Technical polish
+    weight: 0.10
+
+  - key: rhythm
+    display_name: Rhythm and groove
+    definition: >-
+      Pulse, groove, timing stability, expressive timing, accent placement,
+      coordination, and genre appropriateness.
+    evidence:
+      - Pulse clarity and groove when appropriate
+      - Timing stability and unintended drift
+      - Expressive timing, swing, and rubato
+      - Accent placement
+      - Coordination between parts
+      - Unintended stutters or timing conflicts
+    anchors:
+      "0": Persistently broken or random timing with no usable pulse.
+      "2": Major rhythmic or coordination failures.
+      "5": Mostly stable but unremarkable or mechanical timing.
+      "8": Strong genre-appropriate groove or convincing expressive timing.
+      "10": Exceptional rhythmic control, interaction, and expressive placement.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: appropriate pulse or
+      free-time control, timing stability, accent placement, coordination, and
+      expressive placement. Preserve the sum rather than snapping to an anchor;
+      one stable beat alone earns at most 2 total points.
+    confounders:
+      - Intentionally beatless, free-time, or rubato music, for which a strict beat must not be required
+      - Fast tempo
+      - Loudness
+      - Density
+      - Complexity
+    weight: 0.10
+
+  - key: structure
+    display_name: Structure and ending
+    definition: >-
+      Full-clip continuity, phrase relationships, development, repetition with
+      purpose, pacing, transitions, and ending quality across the complete
+      30-second excerpt.
+    evidence:
+      - Moment-to-moment continuity and local transitions
+      - Phrase-to-phrase relationships
+      - Development or gradual change
+      - Purposeful repetition
+      - Pacing across the complete clip
+      - Aimless looping
+      - Incoherent transitions
+      - Abrupt accidental cuts
+      - Unfinished endings
+      - Extended accidental silence
+    anchors:
+      "0": Disconnected events, no meaningful form, or a severe failed ending.
+      "2": >-
+        Frequent incoherent transitions, aimless looping, bad pacing, or major
+        incompleteness.
+      "5": >-
+        Generally coherent with some shape, but noticeable lapses, weak
+        development, or an unconvincing ending.
+      "8": >-
+        Purposeful flow, convincing development or controlled repetition, good
+        pacing, and an appropriate ending.
+      "10": >-
+        Exceptionally integrated and well-shaped 30-second miniature or
+        deliberate open form.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: local continuity,
+      phrase relationships, development, pacing, and ending quality. Preserve
+      the sum rather than snapping to an anchor. A hard cutoff that removes most
+      of the expected clip, very long terminal silence, or an obviously
+      stuttering fragment repeated throughout caps the sum at 2 unless
+      explicitly requested.
+    confounders:
+      - Minimal, ambient, or slowly developing music that is intentional and appropriate
+      - Loudness
+      - Density
+      - Instrument count
+      - Complexity
+    weight: 0.15
+
+  - key: production_quality
+    display_name: Production quality
+    definition: >-
+      Clarity, fidelity, dynamics, frequency balance, spatial balance, edit
+      quality, and freedom from clipping, glitches, noise, mud, harshness,
+      dropouts, bad cuts, and unintended silence.
+    evidence:
+      - Clipping and unintended distortion
+      - Synthesis glitches and dropouts
+      - Noise or hiss
+      - Mud and harshness
+      - Frequency balance and dynamics
+      - Instrument balance
+      - Stereo and spatial balance
+      - Bad edits, chopped attacks or decays, and unintended silence
+    anchors:
+      "0": Severely damaged or unusable signal.
+      "2": Major technical defects throughout.
+      "5": Technically usable but with clear defects.
+      "8": Clean, balanced, and well-edited with only minor weaknesses.
+      "10": Exceptionally polished, clear, balanced, and artefact-free.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: signal integrity,
+      frequency balance, dynamics, spatial balance, and edit quality. Preserve
+      the sum rather than snapping to an anchor; a major glitch, clip, dropout,
+      bad cut, or unintended silence caps the sum at 3.
+    confounders:
+      - Loudness
+      - Heavy compression
+      - Complexity
+      - Density
+      - Instrument count
+      - >-
+        Intentional lo-fi coloration or controlled distortion, which may score
+        highly when stylistically appropriate
+    weight: 0.15
+
+  - key: overall_musicality
+    display_name: Overall musicality
+    definition: >-
+      Holistic artistic appeal, emotional impact, engagement, balance, synergy,
+      expression, and listener satisfaction.
+    evidence:
+      - Artistic character and expression
+      - Emotional effect
+      - Engagement across the complete clip
+      - Balance and synergy among parts
+      - Listener satisfaction for the intended style
+    anchors:
+      "0": Actively unpleasant or musically void.
+      "2": Little artistic or listening value.
+      "5": Moderately appealing but with limited artistic payoff.
+      "8": Expressive, engaging, and satisfying with only minor weaknesses.
+      "10": Compelling, artistically successful, and immediately listenable.
+    calibration: >-
+      Privately score five checks from 0 to 2 and sum them: distinctive artistic
+      character, expressive contour, emotional effect, sustained engagement,
+      and satisfying payoff. Preserve the resulting intermediate score rather
+      than snapping to an anchor. Merely pleasant or generic competence earns
+      at most one point on each check.
+    confounders:
+      - Prompt alignment, which must not be the sole basis for this score
+      - Production polish, which must not be the sole basis for this score
+      - Density
+      - Complexity
+      - Instrument count
+      - Loudness
+    weight: 0.10

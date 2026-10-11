@@ -1,0 +1,135 @@
+Prompt used to rate the DPO candidates (joint prompting: all seven dimensions
+in one call), as sent to each rater. One user turn (audio + text) per clip;
+greedy decoding. <MUSIC_DESCRIPTION> stands for the text prompt of the clip.
+
+==============================================================================
+music_flamingo: user turn
+==============================================================================
+You are an expert music evaluator.
+
+Evaluate one generated instrumental music sample against the text prompt.
+
+Score each dimension from 0.0 to 10.0 independently. Base the scores only on the audible music and the text prompt, not on file names, paths, loudness, or output length. Do not give higher scores just because the sample is louder, denser, or more complex. Reward complexity only when it improves the musical result.
+
+Dimensions:
+
+* prompt_alignment: how accurately the music follows the prompt, including requested genre, mood, style, tempo or energy, and overall sonic atmosphere. Penalize clear mismatches between the prompt and the generated music.
+* style_instrumentation: how well the instrumentation, timbre, arrangement, and production style match the requested musical style. Penalize incorrect, missing, or distracting instruments when they conflict with the prompt.
+* melody: how identifiable, memorable, and catchy the melodic content is. Reward clear motifs, coherent pitch movement, and musically meaningful repetition. Penalize random, weak, or hard-to-follow melodic material.
+* rhythm: how stable, coherent, and musically appropriate the rhythmic structure is. Reward clear groove, timing stability, rhythmic motifs, and good synchronization between instruments. Penalize unstable timing, awkward rhythm, or instruments that feel out of sync.
+* structure: how coherent the musical form is over time, including phrase development, arrangement consistency, transitions, and avoidance of aimless looping or abrupt cuts.
+* production_quality: how clean, balanced, and listenable the audio is, considering artifacts, noise, distortion, clipping, glitches, unnatural cuts, poor mixing, or muddy sound.
+* overall_musicality: the overall aesthetic and musical appeal of the sample, considering whether it feels expressive, enjoyable, coherent, and usable as a piece of generated music.
+
+Scoring rules:
+
+* 0.0 to 2.0: very poor
+* 2.0 to 4.0: weak
+* 4.0 to 6.0: acceptable but flawed
+* 6.0 to 8.0: good
+* 8.0 to 10.0: excellent
+* Use decimal numbers when needed, for example 7.5.
+* Scores should be independent: a sample can have high production quality but poor prompt alignment, or strong prompt alignment but weak musicality.
+
+Return ONLY strict JSON:
+{"prompt_alignment": <float>, "style_instrumentation": <float>, "melody": <float>, "rhythm": <float>, "structure": <float>, "production_quality": <float>, "overall_musicality": <float>}
+
+<task>
+Score one generated music sample against the prompt.
+</task>
+
+<prompt>
+<MUSIC_DESCRIPTION>
+</prompt>
+
+<instruction>
+Listen to the provided audio sample and return ONLY strict JSON with these numeric keys: prompt_alignment, style_instrumentation, melody, rhythm, structure, production_quality, overall_musicality. Do not include markdown or explanation.
+</instruction>
+
+==============================================================================
+qwen2_audio: user turn
+==============================================================================
+You are an expert music evaluator.
+
+Evaluate one generated instrumental music sample against the text prompt.
+
+Score each dimension from 0.0 to 10.0 independently. Base the scores only on the audible music and the text prompt, not on file names, paths, loudness, or output length. Do not give higher scores just because the sample is louder, denser, or more complex. Reward complexity only when it improves the musical result.
+
+Dimensions:
+
+* prompt_alignment: how accurately the music follows the prompt, including requested genre, mood, style, tempo or energy, and overall sonic atmosphere. Penalize clear mismatches between the prompt and the generated music.
+* style_instrumentation: how well the instrumentation, timbre, arrangement, and production style match the requested musical style. Penalize incorrect, missing, or distracting instruments when they conflict with the prompt.
+* melody: how identifiable, memorable, and catchy the melodic content is. Reward clear motifs, coherent pitch movement, and musically meaningful repetition. Penalize random, weak, or hard-to-follow melodic material.
+* rhythm: how stable, coherent, and musically appropriate the rhythmic structure is. Reward clear groove, timing stability, rhythmic motifs, and good synchronization between instruments. Penalize unstable timing, awkward rhythm, or instruments that feel out of sync.
+* structure: how coherent the musical form is over time, including phrase development, arrangement consistency, transitions, and avoidance of aimless looping or abrupt cuts.
+* production_quality: how clean, balanced, and listenable the audio is, considering artifacts, noise, distortion, clipping, glitches, unnatural cuts, poor mixing, or muddy sound.
+* overall_musicality: the overall aesthetic and musical appeal of the sample, considering whether it feels expressive, enjoyable, coherent, and usable as a piece of generated music.
+
+Scoring rules:
+
+* 0.0 to 2.0: very poor
+* 2.0 to 4.0: weak
+* 4.0 to 6.0: acceptable but flawed
+* 6.0 to 8.0: good
+* 8.0 to 10.0: excellent
+* Use decimal numbers when needed, for example 7.5.
+* Scores should be independent: a sample can have high production quality but poor prompt alignment, or strong prompt alignment but weak musicality.
+
+Return ONLY strict JSON:
+{"prompt_alignment": <float>, "style_instrumentation": <float>, "melody": <float>, "rhythm": <float>, "structure": <float>, "production_quality": <float>, "overall_musicality": <float>}
+
+<task>
+Score one generated music sample against the prompt.
+</task>
+
+<prompt>
+<MUSIC_DESCRIPTION>
+</prompt>
+
+<instruction>
+Listen to the provided audio sample and return ONLY strict JSON with these numeric keys: prompt_alignment, style_instrumentation, melody, rhythm, structure, production_quality, overall_musicality. Do not include markdown or explanation.
+</instruction>
+
+==============================================================================
+qwen3_omni: user turn
+==============================================================================
+You are an expert music evaluator.
+
+Evaluate one generated instrumental music sample against the text prompt.
+
+Score each dimension from 0.0 to 10.0 independently. Base the scores only on the audible music and the text prompt, not on file names, paths, loudness, or output length. Do not give higher scores just because the sample is louder, denser, or more complex. Reward complexity only when it improves the musical result.
+
+Dimensions:
+
+* prompt_alignment: how accurately the music follows the prompt, including requested genre, mood, style, tempo or energy, and overall sonic atmosphere. Penalize clear mismatches between the prompt and the generated music.
+* style_instrumentation: how well the instrumentation, timbre, arrangement, and production style match the requested musical style. Penalize incorrect, missing, or distracting instruments when they conflict with the prompt.
+* melody: how identifiable, memorable, and catchy the melodic content is. Reward clear motifs, coherent pitch movement, and musically meaningful repetition. Penalize random, weak, or hard-to-follow melodic material.
+* rhythm: how stable, coherent, and musically appropriate the rhythmic structure is. Reward clear groove, timing stability, rhythmic motifs, and good synchronization between instruments. Penalize unstable timing, awkward rhythm, or instruments that feel out of sync.
+* structure: how coherent the musical form is over time, including phrase development, arrangement consistency, transitions, and avoidance of aimless looping or abrupt cuts.
+* production_quality: how clean, balanced, and listenable the audio is, considering artifacts, noise, distortion, clipping, glitches, unnatural cuts, poor mixing, or muddy sound.
+* overall_musicality: the overall aesthetic and musical appeal of the sample, considering whether it feels expressive, enjoyable, coherent, and usable as a piece of generated music.
+
+Scoring rules:
+
+* 0.0 to 2.0: very poor
+* 2.0 to 4.0: weak
+* 4.0 to 6.0: acceptable but flawed
+* 6.0 to 8.0: good
+* 8.0 to 10.0: excellent
+* Use decimal numbers when needed, for example 7.5.
+* Scores should be independent: a sample can have high production quality but poor prompt alignment, or strong prompt alignment but weak musicality.
+
+Return ONLY strict JSON:
+{"prompt_alignment": <float>, "style_instrumentation": <float>, "melody": <float>, "rhythm": <float>, "structure": <float>, "production_quality": <float>, "overall_musicality": <float>}
+
+<task>
+Score one generated music sample against the prompt. Return text only; do not generate audio.
+</task>
+
+<prompt>
+<MUSIC_DESCRIPTION>
+</prompt>
+
+<instruction>
+Listen to the provided audio sample and return ONLY strict JSON with these numeric keys: prompt_alignment, style_instrumentation, melody, rhythm, structure, production_quality, overall_musicality. Do not include markdown or explanation.
+</instruction>

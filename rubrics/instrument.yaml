@@ -1,0 +1,147 @@
+# Instrumentation rubric. The prompt requests one to three of guitar, piano,
+# synthesizer, bass, and drums.
+name: instrument
+score_min: 0.0
+score_max: 10.0
+clip_duration_seconds: 15
+ending_window_seconds: 5
+task_instructions:
+  - First list which instruments the music description explicitly requests, then listen to the complete clip and judge only how well those requested instruments are realized. Instruments the description does not name are not part of the request.
+  - The description may name an instrument in several forms. "synth" and "synthesizer" are the same request; "drums", "drum kit" and "drumset" are the same request; "bass", "bassline" and "bass guitar" are the same request; "piano" and "grand piano" are the same request.
+  - A request for several instruments is a request for all of them. Award partial credit in proportion to how many of the requested instruments are genuinely audible; a clip that delivers two of three requested instruments convincingly is neither a failure nor a success.
+  - Judge only what you can actually hear. Genre convention is not evidence: a house track is not proven to contain a bass guitar because house music usually has one, and a rock arrangement is not proven to contain a guitar because rock usually does.
+  - Do not infer an instrument from world knowledge, from the style words in the description, or from what the arrangement would conventionally use. The only evidence is the audio.
+  - Extra instruments beyond the request are normal accompaniment and must not be penalized on their own. Penalize them only when the description explicitly forbids them, or when they bury the requested instruments so thoroughly that the request is no longer met.
+  - Production quality, mixing, loudness, melodic interest, emotional impact and general musical enjoyment are not part of any dimension here. A poorly produced clip that plainly contains the requested instruments outscores a beautiful one that does not.
+dimensions:
+  - key: requested_instrument_coverage
+    display_name: Requested instrument coverage
+    definition: >-
+      How completely the generated audio audibly contains the instruments
+      explicitly requested in the music description. When several instruments are
+      requested, the score reflects what fraction of them are genuinely present.
+    evidence:
+      - Whether each requested instrument can be picked out and pointed to in the mix
+      - How many of the requested instruments are present out of how many were asked for
+      - Direct timbral evidence such as the attack, decay and resonance characteristic of the named instrument
+      - Whether a requested instrument is present as a real part rather than as a single incidental sound
+      - Whether an apparently missing instrument is merely quiet in the mix or genuinely absent
+    anchors:
+      "0": >-
+        None of the requested instruments is audible anywhere in the clip.
+      "2": >-
+        Only a small part of the request is met, such as one instrument out of
+        three, with the rest plainly absent.
+      "5": >-
+        Roughly half of the requested instruments are convincingly present, or a
+        single requested instrument is present but so faint and intermittent that
+        its presence is arguable.
+      "8": >-
+        Nearly all of the requested instruments are clearly present, with at most
+        one weakly represented.
+      "10": >-
+        Every requested instrument is unmistakably present throughout the clip.
+    calibration: >-
+      Score in proportion to the fraction of the request that was met. For a
+      request of piano, bass and drums where piano and drums are convincingly
+      audible but bass is not, the answer is neither 0 nor 10 but a middling
+      score reflecting two of three. Extra unrequested instruments do not reduce
+      this score.
+    confounders:
+      - Genre or style association, which is not evidence that an instrument is audible
+      - Visual or world knowledge about what instruments a described scene would contain
+      - A low-frequency sound, which is not automatically a bass guitar and may be a synth sub, a kick drum or a low pad
+      - Rhythmic transients, which are not automatically acoustic drums and may be percussion loops, clicks or processed noise
+      - Harmonic pads, which are not automatically strings or synthesizers
+      - A single isolated event, which is much weaker evidence than a meaningful ongoing presence
+      - Additional unrequested instruments, which are normal accompaniment
+      - Production quality, mixing, loudness and general enjoyment
+      - Tempo, key, melody and emotional character
+    weight: 0.60
+
+  - key: requested_instrument_identifiability
+    display_name: Requested instrument identifiability
+    definition: >-
+      How clearly the timbres present are recognizable as the specific
+      instruments that were requested, rather than as generic substitutes that
+      merely occupy the same role.
+    evidence:
+      - Whether a plucked sound is specifically a guitar rather than a generic plucked or harp-like timbre
+      - Whether a keyboard sound is specifically an acoustic piano rather than a generic keyboard, pad or electric piano
+      - Whether a low part is specifically a bass instrument rather than an undifferentiated low synth tone
+      - Whether percussion is specifically a drum kit rather than generic percussive transients or programmed clicks
+      - Whether a synthesizer is specifically synthetic rather than a heavily processed acoustic timbre
+      - Characteristic articulation and playing technique appropriate to the named instrument
+    anchors:
+      "0": >-
+        The sounds standing in for the requested instruments are unrecognizable
+        as those instruments.
+      "2": >-
+        Only the broad role is filled; a listener could not identify the specific
+        requested instruments from the audio alone.
+      "5": >-
+        The requested instruments are plausible but ambiguous, and could equally
+        be described as something else in the same family.
+      "8": >-
+        The requested instruments are clearly recognizable, with minor ambiguity
+        on one of them.
+      "10": >-
+        Every requested instrument is immediately and unambiguously identifiable
+        by timbre.
+    calibration: >-
+      Judge only the instruments that are actually present; an absent instrument
+      is scored under coverage and must not be double-penalized here. Stylistically
+      appropriate processing such as distortion, chorus, compression or reverb is
+      normal and is penalized only when it makes the requested instrument
+      impossible to recognize.
+    confounders:
+      - Whether the instrument is present at all, which is scored under coverage
+      - Stylistically normal effects processing, amp simulation and studio treatment
+      - Sample quality, synthesis realism and how convincingly "real" the rendering sounds
+      - Mix balance, loudness and frequency masking
+      - The musical quality of what is played on the instrument
+      - Genre conventions about which instrument variant a style would use
+    weight: 0.25
+
+  - key: instrumentation_consistency
+    display_name: Instrumentation consistency
+    definition: >-
+      How consistently the requested instrumentation is meaningfully realized
+      across the clip, as opposed to appearing once and vanishing.
+    evidence:
+      - Whether each requested instrument contributes across the clip rather than in a single moment
+      - Whether a requested instrument that enters late or drops out does so as a musical choice
+      - Whether the requested instrumentation still governs the arrangement at the end of the clip
+      - Whether a requested instrument is a structural part of the arrangement or an incidental decoration
+      - Whether the instrumentation drifts away to entirely different instruments partway through
+    anchors:
+      "0": >-
+        The requested instrumentation appears only for an instant, or is
+        abandoned almost immediately for different instruments.
+      "2": >-
+        A requested instrument is audible only in one brief fragment and plays no
+        real part in the arrangement.
+      "5": >-
+        The requested instrumentation is present for roughly half the clip, or is
+        intermittent in a way that does not read as musical arrangement.
+      "8": >-
+        The requested instrumentation governs the clip with normal musical rests,
+        entrances and exits.
+      "10": >-
+        The requested instrumentation is meaningfully and coherently present
+        across the whole clip.
+    calibration: >-
+      This is not a second coverage score. An instrument that is present but
+      trivially so scores low here while still counting as present under
+      coverage. Rests, arrangement changes, call-and-response, breakdowns and
+      musically valid entrances and exits are normal and must not be penalized;
+      no requested instrument is required to play continuously.
+    confounders:
+      - Whether the requested instruments are present at all, which is scored under coverage
+      - Whether they are recognizable, which is scored under identifiability
+      - Normal musical rests, breakdowns, drops, intros and outros
+      - Call-and-response and alternating textures between instruments
+      - Dynamic variation and arrangement development across the clip
+      - Additional unrequested instruments entering or leaving
+      - Tempo changes, production quality and general enjoyment
+    weight: 0.15

@@ -1,0 +1,123 @@
+# Key rubric. The prompt requests one of 24 keys (tonic and mode).
+name: key
+score_min: 0.0
+score_max: 10.0
+clip_duration_seconds: 15
+ending_window_seconds: 5
+task_instructions:
+  - First identify the tonal centre of the complete clip - the pitch that functions as the point of rest - and judge it against the key named in the music description; do not equate the lowest note, the loudest note, or the first note with the tonic.
+  - The description may name the key in several forms. "C major", "key of C major", "C maj" and a bare "C" all request C major; "A minor", "key of A minor", "A min" and "Am" all request A minor. Treat a bare note name with no mode word as a major-key request.
+  - Enharmonic spellings name the same pitch class. A# and Bb are the same tonic, as are C#/Db, D#/Eb, F#/Gb and G#/Ab. Never penalize a clip for realizing the requested pitch class under the other spelling.
+  - Keep tonic accuracy separate from mode accuracy. A clip clearly centred on C but plainly in C minor when C major was requested has strong tonic evidence and weak mode evidence, and must be scored that way rather than averaged into a single middling number.
+  - Judge the tonal centre from harmonic function across the whole clip - cadences, bass motion, which chord the music rests on - not from the pitch content of any single moment.
+  - Transposition is a real error. A clip that is internally coherent and well made but sits a whole tone below the requested key is a low score for tonic adherence, however musical it sounds.
+  - Modulation, borrowed chords and brief chromaticism are normal musical behaviour. Penalize them only when they destroy the requested key rather than decorate it.
+dimensions:
+  - key: requested_key_adherence
+    display_name: Requested key adherence
+    definition: >-
+      How accurately the tonal centre of the complete clip matches the tonic
+      pitch class requested in the music description, whether that key was
+      written as a full name, an abbreviation, a chord symbol, or a bare note
+      name.
+    evidence:
+      - Which pitch the music repeatedly returns to and rests on
+      - The pitch class of the final chord or last sustained harmony
+      - Cadential motion that confirms a tonic, such as a dominant resolving to it
+      - The root of the bass line at points of arrival
+      - Whether the opening and closing harmonies agree on one tonal centre
+      - Sustained transposition away from the requested pitch class
+    anchors:
+      "0": >-
+        No tonal centre is discernible when a key is requested, or the clip is
+        centred on a pitch class distant from the request with no audible
+        relationship to it.
+      "2": >-
+        A clear tonal centre exists but is on the wrong pitch class, with only a
+        weak relationship to the target such as the relative or dominant key.
+      "5": >-
+        The tonal centre is ambiguous between the requested pitch class and
+        another, or the clip drifts between the two without settling.
+      "8": >-
+        The requested pitch class is clearly the tonal centre, with only brief
+        passages that pull elsewhere.
+      "10": >-
+        The complete clip unambiguously and consistently establishes the
+        requested pitch class as its tonal centre.
+    calibration: >-
+      Score the pitch class of the tonal centre only. Enharmonic spellings of the
+      same pitch class are identical and must score the same. Whether the mode is
+      major or minor is scored separately and must not change this number.
+    confounders:
+      - Major versus minor mode, which has its own dimension
+      - Instrumentation, timbre, and which instruments carry the melody
+      - Brightness, darkness, warmth, or emotional character of the sound
+      - Genre, production polish, mixing quality, loudness, and general enjoyment
+      - A single isolated note matching the requested tonic, which is not evidence of a tonal centre
+      - Chromatic or non-diatonic notes, which do not by themselves indicate the wrong key
+      - Tempo, rhythm, groove, and beat placement
+      - The spelling of the accidental, since A# and Bb name one pitch class
+    weight: 0.60
+
+  - key: requested_mode_adherence
+    display_name: Requested mode adherence
+    definition: >-
+      Whether the clip realizes the requested major or minor mode, judged from
+      the quality of the third and sixth degrees above the tonal centre the music
+      actually establishes, independent of whether that tonal centre is the
+      requested one.
+    evidence:
+      - Whether the third above the audible tonic is major or minor
+      - The quality of the tonic chord itself at points of rest
+      - Characteristic minor-mode features such as a raised leading tone or a flattened sixth
+      - Whether cadences resolve to a major or a minor tonic chord
+      - Consistent modal colour across the complete clip rather than in one phrase
+    anchors:
+      "0": The clip plainly realizes the opposite mode from the one requested throughout.
+      "2": The requested mode is mostly contradicted, with only isolated moments consistent with it.
+      "5": The mode is genuinely ambiguous, modal, or shifts between major and minor without settling.
+      "8": The requested mode is clearly realized, with brief borrowed or modal inflections.
+      "10": The requested mode is unambiguous and consistent across the complete clip.
+    calibration: >-
+      Judge the mode relative to the tonal centre the clip actually establishes,
+      even when that centre is the wrong pitch class. A clip correctly in minor
+      but a semitone low scores high here and low on tonic adherence.
+    confounders:
+      - Which pitch class the tonal centre sits on, which is scored separately
+      - Whether the music sounds happy, sad, bright, dark, or tense, which is mood and not mode
+      - Instrumentation, register, and timbral darkness
+      - Dissonance, distortion, noise, and production choices
+      - Brief borrowed chords or modal mixture that do not overturn the prevailing mode
+      - Blues or modal inflections that mix thirds as a stylistic norm
+    weight: 0.25
+
+  - key: tonal_center_stability
+    display_name: Tonal centre stability
+    definition: >-
+      How consistently the clip maintains one coherent tonal centre from
+      beginning to end, independent of whether that centre is the requested key.
+    evidence:
+      - Whether the same tonal centre governs the opening, middle, and ending
+      - Unrequested modulation, drift, or a wandering sense of key
+      - Whether harmonic movement resolves coherently rather than dissolving
+      - Agreement between the bass, harmony, and melody about one centre
+      - Whether the clip ends on a harmony consistent with the centre it established
+    anchors:
+      "0": No coherent tonal centre is sustained at any point; the clip is harmonically incoherent or atonal when a key was requested.
+      "2": The tonal centre collapses or shifts repeatedly with no sense of resolution.
+      "5": A recognizable centre is present but is often obscured, or the clip modulates once without preparation and does not return.
+      "8": One tonal centre governs the clip, with brief chromatic or transitional passages that resolve.
+      "10": A single tonal centre is established immediately and held convincingly through the complete clip.
+    calibration: >-
+      A clip that is rock-solid in the wrong key scores highly here, because
+      whether the centre is the requested one is scored under requested key
+      adherence. Deliberate, well-prepared and resolved modulation is competent
+      music, not instability.
+    confounders:
+      - Whether the stable centre is the requested key or mode, which have their own dimensions
+      - Brief passing chromaticism, secondary dominants, and decorative non-diatonic notes
+      - Intentional and resolved modulation, which is not instability
+      - Genre conventions such as static drones, single-chord vamps, or modal jazz
+      - Tempo changes, rhythmic complexity, and arrangement density
+      - Production quality, loudness, mixing, and general enjoyment
+    weight: 0.15
